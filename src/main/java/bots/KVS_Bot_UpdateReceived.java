@@ -31,7 +31,7 @@ public class KVS_Bot_UpdateReceived implements OnUpdateInterface {
     private void enterText(Update update, TelegramLongPollingBot telegramLongPollingBot) {
         String text = update.getMessage().getText();
         if (text.length() == 36 || text.indexOf("-") > 0){
-            KVS_Bot_ButtonUtils.getDataDrom1C(text);
+            KVS_Bot_ButtonUtils.getDataFrom1C(text);
         }else {
             answer = "¬ведите корректные данные!";
             fillInlineKeyboardMarkup(text);
