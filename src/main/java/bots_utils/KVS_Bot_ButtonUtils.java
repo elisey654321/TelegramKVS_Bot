@@ -17,8 +17,7 @@ public abstract class KVS_Bot_ButtonUtils {
         }
     }
 
-    public static void getDataDrom1C(String text) {
-
+    public static void getDataFrom1C(String text) {
 
     }
 

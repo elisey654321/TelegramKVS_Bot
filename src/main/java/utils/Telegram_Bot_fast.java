@@ -30,6 +30,6 @@ public class Telegram_Bot_fast extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        onUpdateInterface.onUpdateReceived(update,this);
+        onUpdateInterface.onUpdateReceived(update, this);
     }
 }

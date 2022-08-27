@@ -22,18 +22,23 @@ public class ApplicationTelegram extends Thread {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             for (TgBot bot : tgBots) {
-                Telegram_Bot_fast telegramKVS1C_bot = new Telegram_Bot_fast(bot.getName(),bot.getToken());
-                Class<?> clazz = Class.forName("bots.KVS_Bot_UpdateReceived");
-                telegramKVS1C_bot.setOnUpdateInterface((OnUpdateInterface)clazz.newInstance());
-                telegramBotsApi.registerBot(telegramKVS1C_bot);
-                System.out.println("Bot " + bot.getName() + " is started!!");
+                Telegram_Bot_fast telegramKVS1C_bot = new Telegram_Bot_fast(bot.getName(), bot.getToken());
+                if (bot.getActivate()) {
+                    Class<?> clazz = Class.forName("bots." + bot.getNameReaction());
+                    telegramKVS1C_bot.setOnUpdateInterface((OnUpdateInterface) clazz.newInstance());
+                    telegramBotsApi.registerBot(telegramKVS1C_bot);
 
-                telegramKVS1C_bot.execute(new SendMessage("552286993","Bot " + bot.getName() + " is started!!"));
+                    System.out.println("Bot " + bot.getName() + " is started!!");
+                    if (!bot.getBaseChatId().isEmpty()) {
+                        telegramKVS1C_bot.execute(new SendMessage(bot.getBaseChatId(), "Bot " + bot.getName() + " is started!!"));
+                    }
+                }
             }
-            while (works.get()){
-                sleep(1000);
+            while (works.get()) {
+                Thread.sleep(1000);
             }
-        } catch (TelegramApiException | InterruptedException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (TelegramApiException | InterruptedException | ClassNotFoundException | InstantiationException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
 

@@ -18,26 +18,33 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TgBot {
+
+    private Boolean activate;
     private String name;
     private String token;
+    private String nameReaction;
+    private String baseChatId;
 
-    public static List<TgBot> getListTgBots(){
-        List<TgBot> botList = new ArrayList<TgBot>();
+    public static List<TgBot> getListTgBots() {
+        List<TgBot> botList = new ArrayList<>();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("\\\\TECH-1C-04\\Test\\TgBot.json"));
+            BufferedReader reader = new BufferedReader(new FileReader("C:\\TgBot.json"));
             StringBuilder strReader = new StringBuilder();
-            String line = "";
-            while ((line = reader.readLine()) != null){
+            String line;
+            while ((line = reader.readLine()) != null) {
                 strReader.append(line);
             }
             ObjectMapper objectMapper = new ObjectMapper();
-            List<LinkedHashMap<String,String>> objectList = objectMapper.readValue(strReader.toString(),botList.getClass());
+            List<LinkedHashMap<String, String>> objectList = objectMapper.readValue(strReader.toString(), botList.getClass());
 
-            for (LinkedHashMap ob:objectList) {
-                String name = (String) ob.get(new String("name"));
-                String token = (String) ob.get(new String("token"));
-                botList.add(new TgBot(name,token));
+            for (LinkedHashMap ob : objectList) {
+                Boolean activate = (Boolean) ob.get("activate");
+                String name = (String) ob.get("name");
+                String token = (String) ob.get("token");
+                String reaction = (String) ob.get("reaction");
+                String baseChatId = (String) ob.get("baseChatId");
+                botList.add(new TgBot(activate, name, token, reaction, baseChatId));
             }
         } catch (IOException e) {
             e.printStackTrace();
