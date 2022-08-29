@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ApplicationTelegram extends Thread {
@@ -36,6 +37,11 @@ public class ApplicationTelegram extends Thread {
             }
             while (works.get()) {
                 Thread.sleep(1000);
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Что бы отключить введите Y");
+                if (scanner.next().equals("y")){
+                    works.set(false);
+                }
             }
         } catch (TelegramApiException | InterruptedException | ClassNotFoundException | InstantiationException |
                  IllegalAccessException e) {

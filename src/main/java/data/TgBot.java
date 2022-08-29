@@ -29,7 +29,7 @@ public class TgBot {
         List<TgBot> botList = new ArrayList<>();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("C:\\TgBot.json"));
+            BufferedReader reader = new BufferedReader(new FileReader("\\\\TECH-1C-04\\Test\\TgBot.json"));
             StringBuilder strReader = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
