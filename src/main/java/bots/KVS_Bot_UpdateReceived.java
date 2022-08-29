@@ -52,7 +52,7 @@ public class KVS_Bot_UpdateReceived implements OnUpdateInterface {
                 KVS_Bot_ButtonUtils.getDataLastBackupAPI(telegramLongPollingBot);
                 break;
             case ("checkExchangeAPI"):
-                KVS_Bot_ButtonUtils.getElementByGuidAPI(telegramLongPollingBot);
+                KVS_Bot_ButtonUtils.checkExchangeAPI(telegramLongPollingBot);
                 break;
             default:
                 defaultResult(telegramLongPollingBot);

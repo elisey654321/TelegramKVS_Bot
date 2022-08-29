@@ -1,14 +1,16 @@
 package bots_utils;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Date;
-import java.util.Optional;
 import java.util.TreeSet;
 
 public abstract class KVS_Bot_ButtonUtils {
@@ -61,4 +63,25 @@ public abstract class KVS_Bot_ButtonUtils {
         }
         return result;
     }
+
+    public static void checkExchangeAPI(TelegramLongPollingBot telegramLongPollingBot) {
+        try {
+            sendPost();
+            SendMessage message = new SendMessage("552286993","Обмен включен");
+            telegramLongPollingBot.execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendPost(){
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("http://srv-g9-mail:8080/post");
+        try {
+            HttpResponse response = httpclient.execute(httppost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

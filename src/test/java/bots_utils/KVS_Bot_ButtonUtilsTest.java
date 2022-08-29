@@ -9,4 +9,9 @@ public class KVS_Bot_ButtonUtilsTest extends TestCase {
     public void testGetLastModifiedInCatalog() {
         System.out.println(KVS_Bot_ButtonUtils.getLastModifiedInCatalog("\\\\TECH-1C-04\\Test"));
     }
+
+    @Test
+    public void testSendPost() {
+        KVS_Bot_ButtonUtils.sendPost();
+    }
 }
