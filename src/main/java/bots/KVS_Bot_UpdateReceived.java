@@ -28,6 +28,11 @@ public class KVS_Bot_UpdateReceived implements OnUpdateInterface {
         }
     }
 
+    @Override
+    public void beforeCreateObject(TelegramLongPollingBot telegramLongPollingBot) {
+        KVS_Bot_ButtonUtils.beforeCreateObject(telegramLongPollingBot);
+    }
+
     private void enterText(Update update, TelegramLongPollingBot telegramLongPollingBot) {
         String text = update.getMessage().getText();
         if (text.length() == 36 || text.indexOf("-") > 0){

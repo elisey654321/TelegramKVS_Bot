@@ -16,4 +16,9 @@ public class MyTested_Bot_UpdateReceived implements OnUpdateInterface {
         }
 
     }
+
+    @Override
+    public void beforeCreateObject(TelegramLongPollingBot telegramLongPollingBot) {
+
+    }
 }

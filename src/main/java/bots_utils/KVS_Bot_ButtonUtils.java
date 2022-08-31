@@ -66,7 +66,7 @@ public abstract class KVS_Bot_ButtonUtils {
 
     public static void checkExchangeAPI(TelegramLongPollingBot telegramLongPollingBot) {
         try {
-            sendPost();
+            activatedExchangePost();
             SendMessage message = new SendMessage("552286993","Обмен включен");
             telegramLongPollingBot.execute(message);
         } catch (TelegramApiException e) {
@@ -74,7 +74,7 @@ public abstract class KVS_Bot_ButtonUtils {
         }
     }
 
-    public static void sendPost(){
+    public static void activatedExchangePost(){
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpPost httppost = new HttpPost("http://srv-g9-mail:8080/post");
         try {
@@ -82,6 +82,21 @@ public abstract class KVS_Bot_ButtonUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void beforeCreateObject(TelegramLongPollingBot telegramLongPollingBot){
+        Runnable runnable = ()->{
+            try {
+                activatedExchangePost();
+                telegramLongPollingBot.execute(new SendMessage("552286993","Обмен включен"));
+                Thread.sleep(3600*4);
+            } catch (InterruptedException | TelegramApiException e) {
+                e.printStackTrace();
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
 }

@@ -12,6 +12,6 @@ public class KVS_Bot_ButtonUtilsTest extends TestCase {
 
     @Test
     public void testSendPost() {
-        KVS_Bot_ButtonUtils.sendPost();
+        KVS_Bot_ButtonUtils.activatedExchangePost();
     }
 }

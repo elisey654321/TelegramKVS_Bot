@@ -13,6 +13,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ApplicationTelegram extends Thread {
 
+    private transient TelegramBotsApi telegramBotsApi = null;
+
     @Setter
     private AtomicBoolean works = new AtomicBoolean(true);
 
@@ -21,18 +23,21 @@ public class ApplicationTelegram extends Thread {
         List<TgBot> tgBots = TgBot.getListTgBots();
 
         try {
-            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+            telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             for (TgBot bot : tgBots) {
                 Telegram_Bot_fast telegramKVS1C_bot = new Telegram_Bot_fast(bot.getName(), bot.getToken());
                 if (bot.getActivate()) {
-                    Class<?> clazz = Class.forName("bots." + bot.getNameReaction());
-                    telegramKVS1C_bot.setOnUpdateInterface((OnUpdateInterface) clazz.newInstance());
+                    Class<OnUpdateInterface> clazz = (Class<OnUpdateInterface>) Class.forName("bots." + bot.getNameReaction());
+                    OnUpdateInterface listener = (OnUpdateInterface) clazz.newInstance();
+                    telegramKVS1C_bot.setOnUpdateInterface(listener);
                     telegramBotsApi.registerBot(telegramKVS1C_bot);
 
                     System.out.println("Bot " + bot.getName() + " is started!!");
                     if (!bot.getBaseChatId().isEmpty()) {
                         telegramKVS1C_bot.execute(new SendMessage(bot.getBaseChatId(), "Bot " + bot.getName() + " is started!!"));
+                        listener.beforeCreateObject(telegramKVS1C_bot);
                     }
+
                 }
             }
             while (works.get()) {
